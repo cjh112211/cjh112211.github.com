@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>即时通讯APP - 掌握未来，畅享沟通</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- GSAP 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e63946',
+                        secondary: '#f1faee',
+                        accent: '#a8dadc',
+                        dark: '#1d3557',
+                        light: '#f8f9fa'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            }
+            .gradient-bg {
+                background: linear-gradient(135deg, #f5f7fa 0%, #f1d5da 100%);
+            }
+            .phone-rotate {
+                transition: transform 0.5s ease;
+            }
+            .phone-rotate:hover {
+                transform: rotateY(15deg) rotateX(5deg);
+            }
+            .feature-card {
+                transition: all 0.3s ease;
+            }
+            .feature-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-white">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#" class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-2">
+                        <i class="fa fa-comments text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-primary">ChatApp</span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-primary transition-colors">功能特点</a>
+                <a href="#download" class="text-gray-600 hover:text-primary transition-colors">立即下载</a>
+                <a href="#about" class="text-gray-600 hover:text-primary transition-colors">关于我们</a>
+                <a href="#contact" class="text-gray-600 hover:text-primary transition-colors">联系我们</a>
+            </div>
+            <div class="flex items-center">
+                <a href="admin.html" class="bg-primary hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors">
+                    管理登录
+                </a>
+                <button id="mobile-menu-button" class="md:hidden ml-4 text-gray-600 hover:text-primary">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-2">
+                <a href="#features" class="block py-2 text-gray-600 hover:text-primary">功能特点</a>
+                <a href="#download" class="block py-2 text-gray-600 hover:text-primary">立即下载</a>
+                <a href="#about" class="block py-2 text-gray-600 hover:text-primary">关于我们</a>
+                <a href="#contact" class="block py-2 text-gray-600 hover:text-primary">联系我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="pt-24 pb-16 gradient-bg">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 text-dark">
+                        掌握未来，<br>
+                        <span class="text-primary">畅享沟通</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8">
+                        一款全新的即时通讯应用，为您带来安全、高效、便捷的沟通体验。随时随地，连接无限可能。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#download" class="bg-primary hover:bg-red-600 text-white px-6 py-3 rounded-md transition-colors flex items-center">
+                            <i class="fa fa-download mr-2"></i> 立即下载
+                        </a>
+                        <a href="#features" class="border border-primary text-primary hover:bg-primary hover:text-white px-6 py-3 rounded-md transition-colors flex items-center">
+                            <i class="fa fa-info-circle mr-2"></i> 了解更多
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <!-- 主手机展示 -->
+                        <div class="relative z-10 animate-float phone-rotate">
+                            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/a0cc81599ffe48ac96d3c23065732ab1~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260521031116C8345474AFBE31860E&rrcfp=f06b921b&x-expires=1781896369&x-signature=YGjsCRap7DcS8I3d3d2A81jHxFk%3D" 
+                                 alt="ChatApp 手机展示" 
+                                 class="w-64 md:w-80 object-contain">
+                        </div>
+                        
+                        <!-- 浮动图片1 -->
+                        <div class="absolute -top-10 -left-20 z-0 animate-float" style="animation-delay: 0.5s;">
+                            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/b4745626a5eb49ac9d5808f6072a2930~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260521031116C8345474AFBE31860E&rrcfp=f06b921b&x-expires=1781896334&x-signature=Cc2XfchVE%2Bu3hQd30lLV9pM2BbU%3D" 
+                                 alt="聊天界面" 
+                                 class="w-32 h-auto rounded-lg shadow-lg">
+                        </div>
+                        
+                        <!-- 浮动图片2 -->
+                        <div class="absolute -bottom-5 -right-10 z-0 animate-float" style="animation-delay: 1s;">
+                            <img src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/1b560e6d4ceb462d9ef5c7de7385585a~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260521031116C8345474AFBE31860E&rrcfp=f06b921b&x-expires=1781896339&x-signature=BCFa9pABg%2FWQXqKENEELnxhCLVU%3D" 
+                                 alt="通讯录界面" 
+                                 class="w-32 h-auto rounded-lg shadow-lg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特点 -->
+    <section id="features" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">功能特点</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    我们的即时通讯应用提供丰富的功能，满足您的各种沟通需求
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 功能卡片1 -->
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-6">
+                        <i class="fa fa-comment text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">即时消息</h3>
+                    <p class="text-gray-600">
+                        快速发送和接收消息，支持文本、表情、图片等多种形式，让沟通更加生动有趣。
+                    </p>
+                </div>
+                
+                <!-- 功能卡片2 -->
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-6">
+                        <i class="fa fa-users text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">群聊功能</h3>
+                    <p class="text-gray-600">
+                        创建和参与群组聊天，方便团队协作、家庭交流或兴趣小组讨论，支持多达1000人同时在线。
+                    </p>
+                </div>
+                
+                <!-- 功能卡片3 -->
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-6">
+                        <i class="fa fa-shield text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">隐私保护</h3>
+                    <p class="text-gray-600">
+                        端到端加密技术，确保您的消息安全可靠，只有您和接收者能够查看内容。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1">
+                    <h3 class="text-2xl font-bold mb-4">畅聊无压力</h3>
+                    <p class="text-gray-600 mb-6">
+                        我们的聊天界面简洁直观，让您专注于沟通本身。支持多种消息类型，包括文本、图片、语音和视频，满足您的各种沟通需求。
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>支持多种消息格式，包括文本、图片、语音和视频</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>实时消息状态显示，了解消息是否已送达和已读</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>消息撤回功能，避免发送错误消息的尴尬</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="order-1 md:order-2 flex justify-center">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/b4745626a5eb49ac9d5808f6072a2930~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260521031116C8345474AFBE31860E&rrcfp=f06b921b&x-expires=1781896334&x-signature=Cc2XfchVE%2Bu3hQd30lLV9pM2BbU%3D" 
+                         alt="聊天界面" 
+                         class="w-64 md:w-80 object-contain rounded-lg shadow-xl">
+                </div>
+            </div>
+            
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="flex justify-center">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/b40e4d92b524408f9160db568ea371c6~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260521031116C8345474AFBE31860E&rrcfp=f06b921b&x-expires=1781896339&x-signature=2gkC7NAhsf5uR1jbD2c6MmcykBk%3D" 
+                         alt="群聊功能" 
+                         class="w-64 md:w-80 object-contain rounded-lg shadow-xl">
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">群组聊天</h3>
+                    <p class="text-gray-600 mb-6">
+                        创建和管理群组，方便团队协作、家庭交流或兴趣小组讨论。支持群公告、群文件共享和群成员管理等功能。
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>支持多达1000人同时在线群聊</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>群公告功能，重要信息不遗漏</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>群文件共享，方便团队协作</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1">
+                    <h3 class="text-2xl font-bold mb-4">隐私安全保障</h3>
+                    <p class="text-gray-600 mb-6">
+                        我们重视您的隐私安全，采用端到端加密技术，确保您的消息只有您和接收者能够查看。
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>端到端加密技术，保护消息安全</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>隐私设置，控制谁可以看到您的个人信息</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>设备管理，随时查看和管理登录设备</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="order-1 md:order-2 flex justify-center">
+                    <img src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/1b560e6d4ceb462d9ef5c7de7385585a~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260521031116C8345474AFBE31860E&rrcfp=f06b921b&x-expires=1781896339&x-signature=BCFa9pABg%2FWQXqKENEELnxhCLVU%3D" 
+                         alt="隐私安全" 
+                         class="w-64 md:w-80 object-contain rounded-lg shadow-xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载区域 -->
+    <section id="download" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">立即下载</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    扫描二维码或直接下载，开始您的智能沟通之旅
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+                <!-- 二维码 -->
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <div class="w-48 h-48 bg-gray-100 flex items-center justify-center mb-4">
+                        <i class="fa fa-qrcode text-6xl text-gray-400"></i>
+                    </div>
+                    <p class="text-center text-gray-600">扫描二维码下载</p>
+                </div>
+                
+                <!-- 下载按钮 -->
+                <div class="flex flex-col gap-4">
+                    <a href="#" class="bg-black hover:bg-gray-800 text-white px-6 py-4 rounded-md transition-colors flex items-center justify-center">
+                        <i class="fa fa-apple text-2xl mr-3"></i>
+                        <div class="text-left">
+                            <div class="text-xs">下载</div>
+                            <div class="text-lg font-semibold">App Store</div>
+                        </div>
+                    </a>
+                    <a href="#" class="bg-black hover:bg-gray-800 text-white px-6 py-4 rounded-md transition-colors flex items-center justify-center">
+                        <i class="fa fa-android text-2xl mr-3"></i>
+                        <div class="text-left">
+                            <div class="text-xs">下载</div>
+                            <div class="text-lg font-semibold">Google Play</div>
+                        </div>
+                    </a>
+                    <a href="#" class="bg-primary hover:bg-red-600 text-white px-6 py-4 rounded-md transition-colors flex items-center justify-center">
+                        <i class="fa fa-download text-2xl mr-3"></i>
+                        <div class="text-left">
+                            <div class="text-xs">下载</div>
+                            <div class="text-lg font-semibold">APK 安装包</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">关于我们</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    我们致力于打造安全、高效、便捷的即时通讯工具，让沟通更加简单
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">我们的使命</h3>
+                    <p class="text-gray-600 mb-6">
+                        我们的使命是通过创新的技术和优质的服务，为用户提供安全、高效、便捷的即时通讯工具，让沟通更加简单、有趣。
+                    </p>
+                    <h3 class="text-2xl font-bold mb-4">我们的团队</h3>
+                    <p class="text-gray-600">
+                        我们拥有一支充满激情和创新精神的团队，由来自世界各地的优秀工程师、设计师和产品经理组成。我们热爱技术，热爱创新，致力于为用户提供最好的产品体验。
+                    </p>
+                </div>
+                <div class="flex justify-center">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-100 rounded-lg p-4 flex flex-col items-center">
+                            <div class="w-20 h-20 rounded-full bg-gray-300 mb-3"></div>
+                            <h4 class="font-semibold">张明</h4>
+                            <p class="text-sm text-gray-600">创始人 & CEO</p>
+                        </div>
+                        <div class="bg-gray-100 rounded-lg p-4 flex flex-col items-center">
+                            <div class="w-20 h-20 rounded-full bg-gray-300 mb-3"></div>
+                            <h4 class="font-semibold">李华</h4>
+                            <p class="text-sm text-gray-600">CTO</p>
+                        </div>
+                        <div class="bg-gray-100 rounded-lg p-4 flex flex-col items-center">
+                            <div class="w-20 h-20 rounded-full bg-gray-300 mb-3"></div>
+                            <h4 class="font-semibold">王芳</h4>
+                            <p class="text-sm text-gray-600">产品经理</p>
+                        </div>
+                        <div class="bg-gray-100 rounded-lg p-4 flex flex-col items-center">
+                            <div class="w-20 h-20 rounded-full bg-gray-300 mb-3"></div>
+                            <h4 class="font-semibold">赵强</h4>
+                            <p class="text-sm text-gray-600">设计师</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">联系我们</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    如果您有任何问题或建议，请随时与我们联系
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 mb-2">姓名</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 mb-2">邮箱</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-gray-700 mb-2">主题</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 mb-2">消息</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        <button type="submit" class="bg-primary hover:bg-red-600 text-white px-6 py-3 rounded-md transition-colors">
+                            发送消息
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <div class="bg-white p-6 rounded-lg shadow-md h-full">
+                        <h3 class="text-2xl font-bold mb-6">联系方式</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fa fa-map-marker text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">地址</h4>
+                                    <p class="text-gray-600">北京市海淀区中关村科技园区8号楼</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fa fa-phone text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">电话</h4>
+                                    <p class="text-gray-600">+86 10 8888 8888</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fa fa-envelope text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">邮箱</h4>
+                                    <p class="text-gray-600">contact@chatapp.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-4 mt-1">
+                                    <i class="fa fa-clock-o text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">工作时间</h4>
+                                    <p class="text-gray-600">周一至周五: 9:00 - 18:00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <h4 class="font-semibold mb-4">关注我们</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fa fa-weixin"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fa fa-weibo"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fa fa-qq"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fa fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary mr-2">
+                            <i class="fa fa-comments text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold">ChatApp</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        一款全新的即时通讯应用，为您带来安全、高效、便捷的沟通体验。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-weixin"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-qq"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">功能特点</a></li>
+                        <li><a href="#download" class="text-gray-400 hover:text-white transition-colors">立即下载</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">关于我们</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">联系我们</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">帮助中心</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">常见问题</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">使用教程</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">隐私政策</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">用户协议</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">联系方式</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fa fa-map-marker mr-2"></i>
+                            <span class="text-gray-400">北京市海淀区中关村科技园区8号楼</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-2"></i>
+                            <span class="text-gray-400">+86 10 8888 8888</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope mr-2"></i>
+                            <span class="text-gray-400">contact@chatapp.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">© 2026 ChatApp. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary hover:bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all opacity-0 invisible">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // 关闭移动端菜单
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                    
+                    // 滚动到目标位置
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 联系表单提交
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // 简单验证
+            if (!name || !email || !subject || !message) {
+                alert('请填写所有必填字段');
+                return;
+            }
+            
+            // 模拟表单提交
+            alert('消息已发送，我们会尽快回复您！');
+            this.reset();
+        });
+
+        // 初始化GSAP动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 注册ScrollTrigger插件
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // 功能卡片动画
+            gsap.utils.toArray('.feature-card').forEach((card, i) => {
+                gsap.from(card, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    delay: i * 0.2
+                });
+            });
+            
+            // 图片和文字区块动画
+            gsap.utils.toArray('section > div > div').forEach((section) => {
+                const image = section.querySelector('img');
+                const text = section.querySelector('h3, p, ul');
+                
+                if (image && text) {
+                    // 图片动画
+                    gsap.from(image, {
+                        x: image.previousElementSibling ? -50 : 50,
+                        opacity: 0,
+                        duration: 1,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 80%',
+                            toggleActions: 'play none none none'
+                        }
+                    });
+                    
+                    // 文字动画
+                    gsap.from(text, {
+                        x: image.previousElementSibling ? 50 : -50,
+                        opacity: 0,
+                        duration: 1,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 80%',
+                            toggleActions: 'play none none none'
+                        },
+                        delay: 0.3
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
